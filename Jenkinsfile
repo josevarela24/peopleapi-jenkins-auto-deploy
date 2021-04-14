@@ -23,6 +23,8 @@ pipeline {
       agent { label 'sonar-dotnet' }
       steps {
         withSonarQubeEnv('SonarQube-Server') {
+          sh "echo $SONAR_HOST_URL"
+          sh "echo $SONAR_AUTH_TOKEN"
           sh "dotnet sonarscanner begin /k:peopleapi /d:sonar.host.url=$SONAR_HOST_URL /d:sonar.login=$SONAR_AUTH_TOKEN"
           sh "dotnet build"
           sh "dotnet sonarscanner end /d:sonar.login=$SONAR_AUTH_TOKEN"
